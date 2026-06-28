@@ -82,9 +82,11 @@ public class ControladorSGSI {
     public List<Paciente> obtenerTodosLosPacientes() {
         List<Paciente> pacientes = new ArrayList<>();
         String sql = "SELECT ID_PACIENTE, DNI, NOMBRE, APELLIDO, TELEFONO, EMAIL FROM PACIENTES";
+
+        // Cambiamos Statement por PreparedStatement aquí
         try (Connection conn = getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
 
             while (rs.next()) {
                 pacientes.add(new Paciente(
